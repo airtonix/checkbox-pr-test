@@ -8,6 +8,11 @@ on:
       - edited
       - synchronize
 
+permissions:
+  pull-requests: write
+  contents: write
+  id-token: read
+  
 jobs:
   DetectCheckboxes:
     runs-on: ubuntu-latest
