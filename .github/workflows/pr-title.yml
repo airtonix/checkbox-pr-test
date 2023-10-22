@@ -1,7 +1,7 @@
 name: Check PR title
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - reopened
@@ -13,12 +13,19 @@ permissions:
   contents: write
   
 jobs:
-  PrintPayload:
+  DetectCheckboxes:
+    runs-on: ubuntu-latest
+    outputs:
+      checked: ${{ steps.detect.outputs.checked }}
+    steps:
+      - uses: airtonix/checkbox-action@v1.1.2
+        id: detect
+        with:
+          action: 'detect'
+
+  PrintCheckboxes:
+    needs: DetectCheckboxes
     runs-on: ubuntu-latest
     steps:
-      # use actions/script to access payload and print it
-      - uses: actions/script@v6
-        with:
-          script: |
-            console.log(JSON.stringify(context.payload))
-
+      - run: |
+          echo ${{needs.DetectCheckboxes.outputs.checked}}
