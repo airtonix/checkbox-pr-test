@@ -13,29 +13,12 @@ permissions:
   contents: write
   
 jobs:
-  DetectCheckboxes:
+  PrintPayload:
     runs-on: ubuntu-latest
-    outputs:
-      checked: ${{ steps.detect.outputs.checked }}
     steps:
-      - uses: marocchino/checkbox-action@v1
-        id: detect
+      # use actions/script to access payload and print it
+      - uses: actions/script@v6
         with:
-          action: 'detect'
-
-  PrintCheckboxes:
-    needs: DetectCheckboxes
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo ${{needs.detect.outputs.checked}}
-
-  LintPrTitle:
-    runs-on: ubuntu-latest
-    permissions:
-      statuses: write
-    steps:
-      - uses: aslafy-z/conventional-pr-title-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            console.log(JSON.stringify(context.payload))
 
