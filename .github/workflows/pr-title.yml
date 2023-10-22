@@ -18,7 +18,7 @@ jobs:
     outputs:
       checked: ${{ steps.detect.outputs.checked }}
     steps:
-      - uses: airtonix/checkbox-action@v1.1.1
+      - uses: airtonix/checkbox-action@v1.1.2
         id: detect
         with:
           action: 'detect'
